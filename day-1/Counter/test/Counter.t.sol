@@ -28,6 +28,13 @@ contract CounterTest is Test {
         assertEq(counter.number(), 0);
     }
 
+    // Tests if decrementing below zero reverts with the correct error message
+    function test_DecrementReverts() public {
+        counter.setNumber(0); // Set initial value to 0
+        vm.expectRevert("Counter cannot be negative");
+        counter.decrement();
+    }
+
     function testFuzz_SetNumber(uint256 x) public {
         counter.setNumber(x);
         assertEq(counter.number(), x);
