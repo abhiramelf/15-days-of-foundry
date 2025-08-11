@@ -12,6 +12,20 @@ contract SimpleBankTest is Test {
         bank = new SimpleBank(msg.sender);
     }
 
+    // Test setting a new owner
+    function testSetOwnerByOwner() public {
+        vm.startPrank(bank.owner());
+        bank.setOwner(address(0));
+        assertEq(bank.owner(), address(0));
+        vm.stopPrank();
+    }
+
+    // Test setting a new owner by non-owner
+    function testSetOwnerByNonOwner() public {
+        vm.expectRevert("Not the contract owner");
+        bank.setOwner(address(0));
+    }
+
     // Test deposit by owner
     function testDepositByOwner() public {
         vm.startPrank(bank.owner());

@@ -18,8 +18,4 @@ contract SimpleBankFactory {
     function getBanks() public view returns (SimpleBank[] memory) {
         return banks;
     }
-
-    function getBankCount() public view returns (uint256) {
-        return banks.length;
-    }
 }
