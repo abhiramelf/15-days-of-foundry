@@ -3,7 +3,7 @@ pragma solidity ^0.8.30;
 
 // Simple bank contract that allows users to deposit, withdraw, and check their balances.
 contract SimpleBank {
-    address private owner; // Owner of the contract
+    address public owner; // Owner of the contract
     mapping(address => uint256) private balances; // Mapping of user addresses to their balances
 
     constructor(address _owner) {
