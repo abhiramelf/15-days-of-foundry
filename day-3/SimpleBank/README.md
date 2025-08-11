@@ -1,66 +1,42 @@
-## Foundry
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+# Day 3: SimpleBank
 
-Foundry consists of:
+This folder contains the SimpleBank smart contract, a factory contract for deploying multiple banks, and related Foundry scripts and tests.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+## Structure
 
-## Documentation
+- `src/SimpleBank.sol` — The main SimpleBank contract
+- `src/SimpleBankFactory.sol` — Factory contract to deploy new SimpleBank instances
+- `test/SimpleBank.t.sol` — Example test (update/add more tests for SimpleBank as needed)
+- `script/SimpleBank.s.sol` — Example deployment/interactions script (update/add for SimpleBank as needed)
+- `lib/forge-std/` — Foundry standard library
 
-https://book.getfoundry.sh/
+## SimpleBank Contract
+
+Implements basic deposit, withdraw, and balance tracking for a single user (owner). The factory contract allows any wallet to deploy its own SimpleBank instance, becoming the owner of that instance.
 
 ## Usage
 
 ### Build
-
-```shell
-$ forge build
+```bash
+forge build
 ```
 
 ### Test
-
-```shell
-$ forge test
+```bash
+forge test
 ```
 
 ### Format
-
-```shell
-$ forge fmt
+```bash
+forge fmt
 ```
 
-### Gas Snapshots
-
-```shell
-$ forge snapshot
+### Deploy (example)
+```bash
+forge script script/SimpleBank.s.sol:SimpleBankScript --rpc-url <your_rpc_url> --private-key <your_private_key>
 ```
+Update the script and test files to target SimpleBank for deployment and testing.
 
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+### Foundry Docs
+https://book.getfoundry.sh/

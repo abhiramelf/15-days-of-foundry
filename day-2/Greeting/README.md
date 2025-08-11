@@ -1,66 +1,40 @@
 ## Foundry
+# Day 2: Greeting
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This folder contains a simple Greeting smart contract and related Foundry scripts and tests.
 
-Foundry consists of:
+## Structure
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+- `src/Greeting.sol` — The main Greeting contract
+- `test/Greeting.t.sol` — Unit tests for Greeting
+- `script/Greeting.s.sol` — Script for deployment/interactions
+- `lib/forge-std/` — Foundry standard library
 
-## Documentation
+## Greeting Contract
 
-https://book.getfoundry.sh/
+Implements basic functionality to store and update a greeting message on-chain. Useful for learning about state variables and setter/getter patterns in Solidity.
 
 ## Usage
 
 ### Build
-
-```shell
-$ forge build
+```bash
+forge build
 ```
 
 ### Test
-
-```shell
-$ forge test
+```bash
+forge test
 ```
 
 ### Format
-
-```shell
-$ forge fmt
+```bash
+forge fmt
 ```
 
-### Gas Snapshots
-
-```shell
-$ forge snapshot
+### Deploy (example)
+```bash
+forge script script/Greeting.s.sol:GreetingScript --rpc-url <your_rpc_url> --private-key <your_private_key>
 ```
 
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+## Foundry Docs
+https://book.getfoundry.sh/
