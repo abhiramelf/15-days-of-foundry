@@ -87,4 +87,15 @@ contract SimpleBankTest is Test {
         vm.expectRevert("Not the contract owner");
         bank.getBalance();
     }
+
+    // Fuzz test for withdraw
+    function testFuzz_Withdraw(uint8 amount) public {
+        vm.startPrank(bank.owner());
+        bank.deposit{value: 10000 ether}();
+        uint256 initialBalance = bank.getBalance();
+        bank.withdraw(amount);
+        uint256 newBalance = bank.getBalance();
+        assertEq(newBalance, initialBalance - amount);
+        vm.stopPrank();
+    }
 }
