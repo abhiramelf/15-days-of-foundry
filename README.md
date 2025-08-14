@@ -20,8 +20,15 @@ This repository contains a series of daily projects and exercises to learn and m
 - `day-3/SimpleBank/` — SimpleBank contract, factory, tests, and scripts
    - `src/SimpleBank.sol` — The main SimpleBank contract
    - `src/SimpleBankFactory.sol` — Factory contract to deploy new SimpleBank instances
-   - `test/SimpleBank.t.sol` — Example test (update/add more tests for SimpleBank as needed)
-   - `script/SimpleBank.s.sol` — Example deployment/interactions script (update/add for SimpleBank as needed)
+   - `test/SimpleBank.t.sol` — Foundry test for SimpleBank
+   - `script/SimpleBank.s.sol` — Example deployment/interactions script
+   - `lib/forge-std/` — Foundry standard library
+
+- `day-4/TokenSwap/` — TokenSwap contract, ERC20 tokens, tests, and scripts
+   - `src/TokenSwap.sol` — The main TokenSwap contract
+   - `src/TokenA.sol` — ERC20 TokenA implementation
+   - `src/TokenB.sol` — ERC20 TokenB implementation
+   - `test/TowknSwap.t.sol` — Unit, fuzz, and invariant tests for TokenSwap
    - `lib/forge-std/` — Foundry standard library
 
 ## Getting Started
@@ -39,7 +46,6 @@ This repository contains a series of daily projects and exercises to learn and m
      forge test
      ```
 
-
 ## Daily Projects
 
 ### Day 1: Counter
@@ -50,6 +56,9 @@ Implements a contract to store and update a greeting message. Demonstrates state
 
 ### Day 3: SimpleBank
 Implements a basic bank contract for deposits, withdrawals, and balance tracking. Includes a factory contract so any wallet can deploy its own SimpleBank instance as owner.
+
+### Day 4: TokenSwap
+Implements a token swap contract for exchanging two ERC20 tokens (TokenA and TokenB) and providing liquidity. Includes fuzz and invariant tests to ensure robust behavior and security.
 
 
 ## License

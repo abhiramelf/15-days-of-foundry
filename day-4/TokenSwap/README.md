@@ -1,66 +1,43 @@
 ## Foundry
+# Day 4: TokenSwap
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This folder contains the TokenSwap smart contract and related Foundry scripts and tests for swapping between two ERC20 tokens and providing liquidity.
 
-Foundry consists of:
+## Structure
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+- `src/TokenSwap.sol` — The main TokenSwap contract
+- `src/TokenA.sol` — ERC20 TokenA implementation
+- `src/TokenB.sol` — ERC20 TokenB implementation
+- `test/TowknSwap.t.sol` — Unit, fuzz, and invariant tests for TokenSwap
+- `lib/forge-std/` — Foundry standard library
 
-## Documentation
+## TokenSwap Contract
 
-https://book.getfoundry.sh/
+Allows users to:
+- Swap TokenA for TokenB and vice versa
+- Add liquidity for TokenA and TokenB
+
+All swaps and liquidity actions use standard ERC20 approvals and transfers. Security checks ensure users and the contract have enough balance for each action.
 
 ## Usage
 
 ### Build
-
-```shell
-$ forge build
+```bash
+forge build
 ```
 
 ### Test
-
-```shell
-$ forge test
+```bash
+forge test
 ```
 
-### Format
+### Fuzz and Invariant Testing
+The test suite includes fuzz tests for swapping and liquidity, and invariant tests to ensure total supply and balance sums remain correct.
 
-```shell
-$ forge fmt
+### Deploy (example)
+```bash
+forge create <your_contract_name> --interactive --broadcast
 ```
 
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+## Foundry Docs
+https://book.getfoundry.sh/
