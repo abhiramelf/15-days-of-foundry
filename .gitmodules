@@ -16,3 +16,6 @@
 [submodule "day-4/TokenSwap/lib/openzeppelin-contracts"]
 	path = day-4/TokenSwap/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "day-5/BatchTransfer/lib/forge-std"]
+	path = day-5/BatchTransfer/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
