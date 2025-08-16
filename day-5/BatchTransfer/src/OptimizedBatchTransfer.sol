@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
-contract GasSaver {
+contract OptimizedBatchTransfer {
 
     uint256 public totalTransfersCompleted = 0;
     uint256 public totalEtherSent = 0;
@@ -35,25 +35,32 @@ contract GasSaver {
         uint256 totalAmountToSend = 0;
         uint256 recipientsCount = _recipients.length; // Caching array length in a local variable saves gas on each loop access.
 
-        for (uint256 i = 0; i < recipientsCount; i++) {
-            // This check remains inside the loop for security, ensuring no funds are sent to an invalid address.
-            if (_recipients[i] == address(0)) revert ZeroAddress();
-            // Add the amount to our local sum variable.
-            totalAmountToSend += _amounts[i];
+        unchecked {
+            for (uint256 i = 0; i < recipientsCount; i++) {
+                // This check remains inside the loop for security, ensuring no funds are sent to an invalid address.
+                if (_recipients[i] == address(0)) revert ZeroAddress();
+                // Add the amount to our local sum variable.
+                totalAmountToSend += _amounts[i];
+            }
         }
 
         if (address(this).balance < totalAmountToSend) revert InsufficientBalance();
 
         // We loop again to perform the actual transfers
-        for (uint256 i = 0; i < recipientsCount; i++) {
+        for (uint256 i = 0; i < recipientsCount;) {
             payable(_recipients[i]).transfer(_amounts[i]);
             emit EtherTransferred(_recipients[i], _amounts[i]);
+            unchecked {
+                i++;
+            }
         }
 
         // This is the most critical optimization. We update the state variables only ONCE,
         // after the loop has completed. This saves an enormous amount of gas compared to updating in every iteration.
-        totalTransfersCompleted += recipientsCount;
-        totalEtherSent += totalAmountToSend;
+        unchecked {
+            totalTransfersCompleted += recipientsCount;
+            totalEtherSent += totalAmountToSend;
+        }
     }
 
     // A helper function to check the contract's current balance.

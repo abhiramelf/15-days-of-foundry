@@ -1,55 +1,64 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
-contract GassyBatchTransfer {
+// Importing Ownable to add an owner and increase storage reads.
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract GassyBatchTransfer is Ownable {
+
+    constructor() Ownable(msg.sender) {}
 
     uint256 public totalTransfersCompleted = 0;
     uint256 public totalEtherSent = 0;
-    address public owner;
 
-    constructor() {
-        owner = msg.sender;
-    }
 
-    // Event to log each transfer. Events are cheaper than storage, but still add to the cost.
+    // A mapping to store data for each recipient.
+    mapping(address => uint256) public recipientTransferCounts;
+
+    // A dynamic array in storage. Pushing to this array in a loop is extremely inefficient
+    address[] public transferHistory;
+
     event EtherTransferred(address indexed recipient, uint256 amount);
 
     // Receives Ether to fund the contract for batch transfers.
     receive() external payable {}
 
     // Batch transfers Ether to multiple recipients in a highly inefficient way.
-    function batchTransfer(address[] memory _recipients, uint256[] memory _amounts) onlyOwner public payable {
+    function batchTransfer(address[] memory _recipients, uint256[] memory _amounts) public payable onlyOwner {
 
         require(_recipients.length == _amounts.length, "Recipients and amounts arrays must have the same length.");
         require(_recipients.length > 0, "No recipients provided.");
 
-        // Using a 'for' loop that iterates and performs state-changing operations consumes a lot of gas.
         for (uint256 i = 0; i < _recipients.length; i++) {
+            address recipient = _recipients[i];
+            uint256 amount = _amounts[i];
 
-            // This check for a zero address is repeated in every iteration, hence a lot of gas is consumed.
-            require(_recipients[i] != address(0), "Cannot send to the zero address.");
+            // --- Inefficient Check inside the loop ---
+            require(recipient != address(0), "Cannot send to the zero address.");
 
-            // Using address.transfer() inside a loop creates an external call for each recipient.
-            // Each call has a gas cost associated with it.
-            payable(_recipients[i]).transfer(_amounts[i]);
+            // Reading from storage (SLOAD) in a loop costs gas every time.
+            // We read the owner address here even though it doesn't change and isn't used.
+            address contractOwner = owner();
+            require(contractOwner != address(0)); // Dummy check to prevent compiler optimization
 
-            // This is the most significant source of gas inefficiency.
-            // We are writing to storage in every single iteration of the loop.
-            // Each update is a separate storage write operation (SSTORE), which is one of the most expensive opcodes.
+            payable(recipient).transfer(amount);
+
             totalTransfersCompleted += 1;
-            totalEtherSent += _amounts[i];
+            totalEtherSent += amount;
 
-            emit EtherTransferred(_recipients[i], _amounts[i]);
+            // Update the mapping for the recipient.
+            recipientTransferCounts[recipient] += 1;
+
+            // Push the recipient to the storage array. This is one of the most
+            // gas-intensive operations you can put in a loop.
+            transferHistory.push(recipient);
+
+            emit EtherTransferred(recipient, amount);
         }
     }
 
     // A helper function to check the contract's current balance.
-    function getBalance() onlyOwner public view returns (uint256) {
+    function getBalance() public view returns (uint256) {
         return address(this).balance;
-    }
-
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Not the contract owner");
-        _;
     }
 }
