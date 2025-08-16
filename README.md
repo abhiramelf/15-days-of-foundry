@@ -24,11 +24,19 @@ This repository contains a series of daily projects and exercises to learn and m
    - `script/SimpleBank.s.sol` — Example deployment/interactions script
    - `lib/forge-std/` — Foundry standard library
 
+
 - `day-4/TokenSwap/` — TokenSwap contract, ERC20 tokens, tests, and scripts
    - `src/TokenSwap.sol` — The main TokenSwap contract
    - `src/TokenA.sol` — ERC20 TokenA implementation
    - `src/TokenB.sol` — ERC20 TokenB implementation
    - `test/TowknSwap.t.sol` — Unit, fuzz, and invariant tests for TokenSwap
+   - `lib/forge-std/` — Foundry standard library
+
+- `day-5/BatchTransfer/` — BatchTransfer contracts and tests
+   - `src/GassyBatchTransfer.sol` — Gas-inefficient batch transfer contract (for learning)
+   - `src/OptimizedBatchTransfer.sol` — Highly gas-optimized batch transfer contract
+   - `test/BatchTransfer.t.sol` — Test suite for gas usage and edge cases
+   - `test/BatchTransferSnapshot.t.sol` — Snapshot tests for batch transfers
    - `lib/forge-std/` — Foundry standard library
 
 ## Getting Started
@@ -57,8 +65,12 @@ Implements a contract to store and update a greeting message. Demonstrates state
 ### Day 3: SimpleBank
 Implements a basic bank contract for deposits, withdrawals, and balance tracking. Includes a factory contract so any wallet can deploy its own SimpleBank instance as owner.
 
+
 ### Day 4: TokenSwap
 Implements a token swap contract for exchanging two ERC20 tokens (TokenA and TokenB) and providing liquidity. Includes fuzz and invariant tests to ensure robust behavior and security.
+
+### Day 5: BatchTransfer
+Demonstrates different approaches to batch transferring Ether to multiple recipients, including intentionally gas-inefficient and highly optimized contracts. Includes tests for gas usage and edge cases, allowing benchmarking and comparison of Solidity patterns.
 
 
 ## License
