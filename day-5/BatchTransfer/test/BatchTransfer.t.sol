@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.30;
 
+/// @title Batch Transfer Test
+/// @notice This contract tests the gas usage of different batch transfer implementations.
+/// Comment the GassyBatchTransfer references and uncomment the OptimizedBatchTransfer references
+/// for getting gas reports of OptimizedBatchTransfer contract and vice versa.
+
 import {Test, console} from "forge-std/Test.sol";
 import {GassyBatchTransfer} from "../src/GassyBatchTransfer.sol";
 //import {OptimizedBatchTransfer} from "../src/OptimizedBatchTransfer.sol";

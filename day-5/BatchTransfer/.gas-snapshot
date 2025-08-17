@@ -1,2 +1,2 @@
-BatchTransferSnapshotTest:test_snapshot_batchTransfer() (gas: 479583)
-BatchTransferTest:test_gas_batchTransfer() (gas: 485539)
+BatchTransferSnapshotTest:test_snapshot_gassyBatchTransfer() (gas: 956824)
+BatchTransferSnapshotTest:test_snapshot_optimizedBatchTransfer() (gas: 479489)
