@@ -24,7 +24,6 @@ This repository contains a series of daily projects and exercises to learn and m
    - `script/SimpleBank.s.sol` — Example deployment/interactions script
    - `lib/forge-std/` — Foundry standard library
 
-
 - `day-4/TokenSwap/` — TokenSwap contract, ERC20 tokens, tests, and scripts
    - `src/TokenSwap.sol` — The main TokenSwap contract
    - `src/TokenA.sol` — ERC20 TokenA implementation
@@ -39,6 +38,12 @@ This repository contains a series of daily projects and exercises to learn and m
    - `test/BatchTransferSnapshot.t.sol` — Snapshot tests for batch transfers
    - `lib/forge-std/` — Foundry standard library
 
+- `day-6/Auction/` — Simple ETH auction contract and tests
+   - `src/Auction.sol` — Minimal auction contract using withdraw-pattern refunds
+   - `test/Auction.t.sol` — Comprehensive tests for all error cases, events, and state changes
+   - `lib/forge-std/` — Foundry standard library
+   - `README.md` — Project-specific notes and usage tips
+
 ## Getting Started
 
 1. **Install Foundry**
@@ -51,7 +56,8 @@ This repository contains a series of daily projects and exercises to learn and m
    - Navigate to a day's folder (e.g., `day-1/Counter/`)
    - Run:
      ```bash
-     forge test
+     forge test -vvvv
+     forge coverage
      ```
 
 ## Daily Projects
@@ -65,12 +71,14 @@ Implements a contract to store and update a greeting message. Demonstrates state
 ### Day 3: SimpleBank
 Implements a basic bank contract for deposits, withdrawals, and balance tracking. Includes a factory contract so any wallet can deploy its own SimpleBank instance as owner.
 
-
 ### Day 4: TokenSwap
 Implements a token swap contract for exchanging two ERC20 tokens (TokenA and TokenB) and providing liquidity. Includes fuzz and invariant tests to ensure robust behavior and security.
 
 ### Day 5: BatchTransfer
 Demonstrates different approaches to batch transferring Ether to multiple recipients, including intentionally gas-inefficient and highly optimized contracts. Includes tests for gas usage and edge cases, allowing benchmarking and comparison of Solidity patterns.
+
+### Day 6: Auction
+Implements a minimal ETH auction contract with withdraw-pattern refunds, seller-only finalize, and cancellation before bids. Includes comprehensive tests for all error cases, events, and state changes. See the Auction folder's README for more details and usage tips.
 
 
 ## License
